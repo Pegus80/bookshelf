@@ -8,3 +8,8 @@ insert into users (id, login_name, password_hash, role_name) values (-3, 'admin'
 
 insert into books (id, title, isbn, author, year) values (-1, 'One', '1234567', 'Ivan', 1995)
 
+
+insert into authors (id, name, biography) values (-1, 'John Smit', 'Biography about author')
+insert into authors (id, name, biography) values (-2, 'Brus Ekkel', 'Biography about author')
+
+

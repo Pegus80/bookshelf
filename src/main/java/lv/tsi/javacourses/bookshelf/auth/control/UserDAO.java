@@ -25,6 +25,9 @@ public class UserDAO {
                 .setParameter("loginName", name)
                 .getResultStream()
                 .findFirst();
+
+
+
     }
 
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)

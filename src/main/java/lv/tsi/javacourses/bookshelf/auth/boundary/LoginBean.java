@@ -40,6 +40,7 @@ public class LoginBean implements Serializable {
     private CurrentUser currentUser;
     @Inject
     private UserDAO userDAO;
+
     @NotBlank(message = "Login must not be blank")
     private String loginName;
     @NotBlank(message = "Password must not be blank")
