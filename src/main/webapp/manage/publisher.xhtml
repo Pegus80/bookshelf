@@ -1,0 +1,50 @@
+
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<ui:composition template="/templates/main.xhtml">
+    <f:metadata>
+        <f:viewParam name="id" value="#{publisherBean.id}"/>
+        <f:viewAction action="#{publisherBean.findPublisher}"/>
+    </f:metadata>
+    <ui:define name="content">
+
+        <h:form>
+            <p>
+                <h:outputLabel value="Id"/>
+                <h:inputText readonly="true" value="#{publisherBean.publisherEntity.id}"/>
+            </p>
+            <p>
+                <h:outputLabel value="Name"/>
+                <h:inputText value="#{publisherBean.publisherEntity.name}"/>
+            </p>
+            <p>
+                <h:outputLabel value="Country"/>
+                <h:inputText value="#{publisherBean.publisherEntity.country}"/>
+            </p>
+            <p>
+                <h:outputLabel value="City"/>
+                <h:inputText value="#{publisherBean.publisherEntity.city}"/>
+            </p>
+            <p>
+                <h:outputLabel value="Street"/>
+                <h:inputText value="#{publisherBean.publisherEntity.street}"/>
+            </p>
+            <p>
+                <h:outputLabel value="House"/>
+                <h:inputText value="#{publisherBean.publisherEntity.house}"/>
+            </p>
+            <p>
+                <h:commandButton value="Save" action="#{publisherBean.savePublisher}"/>
+                <h:commandButton value="Delete" action="#{publisherBean.deletePublisher}"/>
+            </p>
+        </h:form>
+
+    </ui:define>
+</ui:composition>
+
+</html>
