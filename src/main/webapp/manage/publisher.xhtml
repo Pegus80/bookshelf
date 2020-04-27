@@ -7,13 +7,16 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
 <ui:composition template="/templates/main.xhtml">
+<!--Блок независимо выполняется перед запуском формы, могут запускаться различные методы-->
     <f:metadata>
+<!--        Установка id из url строки в бин publisherBean и -->
+<!--        вызов метода findPublisher для поиска и установки экземпляра publisher-->
         <f:viewParam name="id" value="#{publisherBean.id}"/>
         <f:viewAction action="#{publisherBean.findPublisher}"/>
     </f:metadata>
     <ui:define name="content">
-
         <h:form>
+            <h:messages/>
             <p>
                 <h:outputLabel value="Id"/>
                 <h:inputText readonly="true" value="#{publisherBean.publisherEntity.id}"/>
@@ -39,8 +42,20 @@
                 <h:inputText value="#{publisherBean.publisherEntity.house}"/>
             </p>
             <p>
-                <h:commandButton value="Save" action="#{publisherBean.savePublisher}"/>
-                <h:commandButton value="Delete" action="#{publisherBean.deletePublisher}"/>
+
+
+<!--                Кнопка с использованием AJAX, позволяет перезагружать только форму,-->
+<!--                а не всю страницу-->
+                <h:commandButton value="Save" action="#{publisherBean.savePublisher}">
+                    <f:ajax render="@form" execute="@form"/>
+                </h:commandButton>
+
+<!--            Обычная кнопка-->
+<!--                <h:commandButton value="Save" action="#{publisherBean.savePublisher}"/>-->
+
+
+<!--             Visible кнопки в зависимости от результата матода, можно так же с disabled=-->
+                <h:commandButton value="Delete" action="#{publisherBean.deletePublisher}" rendered="#{not empty publisherBean.publisherEntity.id}" />
             </p>
         </h:form>
 

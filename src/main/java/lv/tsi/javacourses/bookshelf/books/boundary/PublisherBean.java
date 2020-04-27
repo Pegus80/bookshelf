@@ -48,9 +48,20 @@ public class PublisherBean implements Serializable {
         publisherEntity=publisherDAO.updatePublisher(publisherEntity);
     }
 
-    public void deletePublisher() {
-        publisherDAO.deletePublisher(publisherEntity);
-        publisherEntity =null;
+    public String deletePublisher() {
+
+        if (!(publisherEntity == null)) {
+
+            publisherDAO.deletePublisher(publisherEntity);
+            publisherEntity = null;
+
+//        Параметр возвращается JSF форме ввода и выполняется переадресация на другую страницу
+            return "/manage/publishers.xhtml?faces-redirect=true";
+        } else {
+            return null;
+        }
     }
+
+
 
 }

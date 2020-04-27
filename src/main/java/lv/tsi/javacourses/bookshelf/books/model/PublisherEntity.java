@@ -2,6 +2,7 @@ package lv.tsi.javacourses.bookshelf.books.model;
 
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 
 @Entity(name = "Publisher")
 @Table(name = "publishers")
@@ -12,6 +13,7 @@ public class PublisherEntity {
     @GeneratedValue
     Long id;
 
+    @Size(min=3, message = "Minimum 3 symbols")
     @Column(name = "name", length = 100, nullable = false)
     private String name;
 

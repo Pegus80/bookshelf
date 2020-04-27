@@ -4,7 +4,6 @@ import lv.tsi.javacourses.bookshelf.books.model.AuthorEntity;
 import lv.tsi.javacourses.bookshelf.books.model.BookEntity;
 
 import javax.ejb.Stateless;
-import javax.enterprise.context.SessionScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
@@ -24,12 +23,16 @@ public class AuthorDAO {
     }
 
     public AuthorEntity update(AuthorEntity author) {
-        var tmp = em.merge(author);
-        return tmp;
+        return em.merge(author);
     }
 
     public void create(AuthorEntity author) {
         em.persist(author);
+    }
+
+    public void delete(AuthorEntity author) {
+        var tmp = em.merge(author);
+        em.remove(tmp);
     }
 }
 
