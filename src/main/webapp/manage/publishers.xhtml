@@ -36,7 +36,7 @@
             <h:button value="First Page" outcome="publishers.xhtml?page=1"/>
             <h:button value="Previous Page" outcome="publishers.xhtml?page=#{publisherListBean.getPreviousPage()}"/>
 
-            <ui:repeat value="#{publisherListBean.getPageGap(3)}" var="pageNumber">
+            <ui:repeat value="#{publisherListBean.pageGapList}" var="pageNumber">
                 <h:link value="#{pageNumber}">
                     <f:param name="page" value="#{pageNumber}"/>
                     <h:outputText value=" " />

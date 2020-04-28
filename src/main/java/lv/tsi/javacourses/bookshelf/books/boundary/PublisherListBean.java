@@ -20,18 +20,26 @@ public class PublisherListBean  implements Serializable {
 
     private Integer currentPage;
     private int pageCount;
-    private int recordsOnPage = 5;
+    private List<Integer> pageGapList;
 
+
+
+    private static final int RECORDS_ON_PAGE = 5;
+    private static final int PAGE_GAP = 3;
 
     public List<PublisherEntity> getPublishersByPage() {
 
-        if (currentPage == null) {
+        if (currentPage == null || currentPage<1) {
             currentPage = 1;
         }
 
-        pageCount=publisherDAO.getPublishersTotalPages(recordsOnPage);
+        getPageCount();
+        preparePageGapList();
 
-        return publisherDAO.getPublishersByPage(currentPage, recordsOnPage);
+
+        int from = (currentPage - 1) * RECORDS_ON_PAGE;
+
+        return publisherDAO.getPublishersFromTo(from, RECORDS_ON_PAGE);
 
     }
 
@@ -62,18 +70,31 @@ public class PublisherListBean  implements Serializable {
 
 
     public void setCurrentPage(Integer currentPage) {
+        if (currentPage < 1) {
+            currentPage = 1;
+        }
+
+        if (currentPage > getPageCount()) {
+            currentPage = pageCount;
+        }
+
+//        TODO Надо ли тут дополнительно в лог писать ошибку или excpetion бросать, если пользлватель запросил страницу
+//        TODO за пределами диапозона, или достаточно защиты вышe?
         this.currentPage = currentPage;
 
     }
 
 
     public int getPageCount() {
-        return pageCount;
+        var count = publisherDAO.getPublishersCount();
+        return pageCount=(int) Math.ceil(((float) count / RECORDS_ON_PAGE));
     }
 
-    public List<Integer> getPageGap(int pageGap) {
-        int pagesleft = currentPage-pageGap;
-        int pagesright = currentPage+pageGap;
+
+
+    public void preparePageGapList() {
+        int pagesleft = currentPage-PAGE_GAP;
+        int pagesright = currentPage+PAGE_GAP;
 
         if (pagesleft < 1) {
             pagesleft = 1;
@@ -89,6 +110,12 @@ public class PublisherListBean  implements Serializable {
             tmpList.add(i);
         }
 
-        return tmpList;
+
+        pageGapList=tmpList;
+    }
+
+
+    public List<Integer> getPageGapList() {
+        return pageGapList;
     }
 }
