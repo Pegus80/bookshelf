@@ -25,7 +25,7 @@ public class PublisherDAO {
 //    }
 
 
-    public List<PublisherEntity> getPublishersFromTo(int from, int to) {
+    public List<PublisherEntity> getPublishers(int from, int to) {
         return  em.createQuery("select b from Publisher b", PublisherEntity.class)
                 .setFirstResult(from)
                 .setMaxResults(to)

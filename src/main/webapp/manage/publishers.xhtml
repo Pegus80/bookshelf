@@ -7,9 +7,12 @@
 <ui:composition template="/templates/main.xhtml">
     <ui:define name="content">
         <f:metadata>
-            //Установка ID по параметру в URL
-            <f:viewParam name="page" value="#{publisherListBean.currentPage}"/>
+<!--            Установка ID по параметру в URL-->
+            <f:viewParam name="page" value="#{pagingBean.currentPage}"/>
+            <f:viewAction action="#{publisherListBean.prepareView}"/>
         </f:metadata>
+
+
 
         <ui:repeat value="#{publisherListBean.publishersByPage}" var="publisher">
             <h:form>
@@ -26,26 +29,24 @@
         <h:button value="Create new pulisher" outcome="publisher.xhtml"/>
 
 
-<!--        <h:link value="Previous page">-->
-<!--            <f:param name="page" value="#{publisherListBean.previousPage}"/>-->
-<!--        </h:link>-->
-
-
         <h:form>
 
-            <h:button value="First Page" outcome="publishers.xhtml?page=1"/>
-            <h:button value="Previous Page" outcome="publishers.xhtml?page=#{publisherListBean.getPreviousPage()}"/>
+            <h:button value="First Page" outcome="publishers.xhtml?page=1"
+                      disabled="#{pagingBean.firstRecord}" />
+            <h:button value="Previous Page" outcome="publishers.xhtml?page=#{pagingBean.currentPage-1}"
+                      disabled="#{pagingBean.firstRecord}" />
 
-            <ui:repeat value="#{publisherListBean.pageGapList}" var="pageNumber">
+            <ui:repeat value="#{pagingBean.pageGapList}" var="pageNumber">
                 <h:link value="#{pageNumber}">
                     <f:param name="page" value="#{pageNumber}"/>
                     <h:outputText value=" " />
                 </h:link>
             </ui:repeat>
 
-
-            <h:button value="Next Page" outcome="publishers.xhtml?page=#{publisherListBean.getNextPage()}"/>
-            <h:button value="Last Page" outcome="publishers.xhtml?page=#{publisherListBean.pageCount}"/>
+            <h:button value="Next Page" outcome="publishers.xhtml?page=#{pagingBean.currentPage+1}"
+                      disabled="#{pagingBean.lastRecord}" />
+            <h:button value="Last Page" outcome="publishers.xhtml?page=#{pagingBean.pageCount}"
+                      disabled="#{pagingBean.lastRecord}" />
 
         </h:form>
 
